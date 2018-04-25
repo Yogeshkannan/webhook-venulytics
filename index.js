@@ -13,16 +13,20 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 server.post('/venulytics', (req, res) => {
-
+    console.log("req.body", req.body)
+    console.log("req.queryResult", req.queryResult)
     var token = "dGVzdCB0ZXN0OnRlc3RAZ21haWwuY29tOig4ODgpIDg4OC04ODg4";
     var intentName = req.queryResult.intent.displayName;
+    console.log("intentName", intentName)
     var bookedVenueNumber, bookedTableId;
 
     if(intentName === 'UserProvidesVenueName') {
       var venueNameSlot = req.body.result.parameters.venueName;
+      console.log("venueNameSlot", venueNameSlot)
       if(venueNameSlot) {
         const venueName = venueNameSlot;
         bookingService.getVenueDetails(venueName, function (venueNumber) {
+          console.log("venueNumber", venueNumber)
             if (venueNumber != "ERROR") {
                 bookedVenueNumber = venueNumber;
                 var dataToSend = "To book a reservation in " + venueName + ", Please choose the table number";
