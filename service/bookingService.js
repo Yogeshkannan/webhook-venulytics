@@ -1,5 +1,10 @@
-function getVenueDetails(venueName, callback) {
+const request = require('request');
+
+exports.getVenueDetails = function(venueName, callback) {
+  console.log("venueName-->", venueName)
     request.get(venueDetailsRequest(venueName), function (error, response, body) {
+        //console.log("response-->", response)
+        console.log("body-->", body)
         var d = JSON.parse(body);
         var result = d.venues;
         if (result.length > 0) {
@@ -11,17 +16,19 @@ function getVenueDetails(venueName, callback) {
 }
 
 function venueDetailsRequest(venueName) {
-    var token = "dGVzdCB0ZXN0OnRlc3RAZ21haWwuY29tOig4ODgpIDg4OC04ODg4";
+    var token = 'dGVzdCB0ZXN0OnRlc3RAZ21haWwuY29tOig4ODgpIDg4OC04ODg4';
+    var apiUrl = 'http://dev.api.venuelytics.com/WebServices/rsapi/v1//venues/q?lat=&lng=&dist=20000&search=' + venueName;
     var options = {
-        url: "http://dev.api.venuelytics.com/WebServices/rsapi/v1//venues/q?lat=&lng=&dist=20000&search=" + venueName,
+        url: apiUrl,
         headers: {
             'Authorization': 'Anonymous ' + token
         }
     };
+    console.log("Options-->", options)
     return options;
 }
 
-function getTableDetails(tableNumber, bookedVenueNumber, callback) {
+exports.getTableDetails = function(tableNumber, bookedVenueNumber, callback) {
     request.get(tableDetailsRequest(tableNumber, bookedVenueNumber), function (error, response, body) {
         var result = JSON.parse(body);
         if (result) {
@@ -50,7 +57,7 @@ function tableDetailsRequest(tableNumber, bookedVenueNumber) {
     return options;
 }
 
-function orderConfirmation(bookedVenueNumber, bookedTableId, callback) {
+exports.orderConfirmation = function(bookedVenueNumber, bookedTableId, callback) {
     request.post(bookYourOrder(bookedVenueNumber, bookedTableId), function (error, response, body) {
         var result = JSON.parse(body);
         if (result) {
