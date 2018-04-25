@@ -13,10 +13,10 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 server.post('/venulytics', (req, res) => {
-    console.log("req", JSON.stringfy(req))
-    console.log("req.body", JSON.stringfy(req.body))
+    console.log("req", JSON.stringify(req))
+    console.log("req.body", JSON.stringify(req.body))
     console.log("req.queryResult", req.queryResult)
-    var token = "dGVzdCB0ZXN0OnRlc3RAZ21haWwuY29tOig4ODgpIDg4OC04ODg4";
+    //var token = "dGVzdCB0ZXN0OnRlc3RAZ21haWwuY29tOig4ODgpIDg4OC04ODg4";
     var intentName = req.queryResult.intent.displayName;
     console.log("intentName", intentName)
     var bookedVenueNumber, bookedTableId;
